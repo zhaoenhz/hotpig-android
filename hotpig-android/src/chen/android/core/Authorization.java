@@ -1,8 +1,5 @@
 package chen.android.core;
 
-import java.util.Arrays;
-import java.util.List;
-
 import chen.android.F;
 import chen.android.data.Account;
 import chen.android.event.Event;
@@ -19,8 +16,6 @@ public class Authorization {
 
 	public static final String AuthFileName = "auth";
 	private static AndroidProperties prop = new AndroidProperties(AuthFileName, Context.MODE_PRIVATE);
-	private static String AuthCookieName1 = "curUserEmail";
-	private static String AuthCookieName2 = "curUserPw";
 	private static final String CookiePropertyName = "cookie";
 	private static final String AccountPropertyName = "account";
 	
@@ -62,35 +57,12 @@ public class Authorization {
 	 * 存储cookie信息
 	 * @param cookies
 	 */
-	public static void persistAuthCookie(List<String> cookies){
-    	String cookie = extractAuthCookie(cookies);
+	public static void persistAuthCookie(Account acc, String cookie){
+		if(acc == null || cookie == null || cookie.length() == 0) throw new IllegalArgumentException();
     	prop.put(CookiePropertyName, cookie);
-    	Account acc = F.api().currentAccount();
     	prop.put(AccountPropertyName, F.gson().toJson(acc));
     	prop.store();
-	}
-	
-	private static String extractAuthCookie(List<String> cookies){
-		String[] needs = new String[2];
-    	for(String cookie : cookies){
-        	String[] segments = cookie.split(";");
-        	if(segments.length == 0) continue;
-    		String pairs = segments[0].trim();
-    		int idx = pairs.indexOf('=');
-    		String name = pairs.substring(0, idx).trim();
-    		String value = pairs.substring(idx+1).trim();
-    		//只接受受权cookie
-    		if(AuthCookieName1.equals(name)){
-    			needs[0] = value;
-    		} else if(AuthCookieName2.equals(name)){
-    			needs[1] = value;
-    		}
-    	}
-    	if(Arrays.asList(needs).contains(null)){
-    		throw new RuntimeException("授权出错");
-    	}
-    	String cookie = AuthCookieName1 + "=" + needs[0] + ";" + AuthCookieName2 + "=" + needs[1];
-    	return cookie;
+    	EventSupport.fire(new Event(EventType.UpdateAccountInfo, null));
 	}
 	
 	//获取cookie

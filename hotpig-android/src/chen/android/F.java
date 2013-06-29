@@ -22,6 +22,8 @@ public class F {
 	private static Gson gson;
 	
 	static{
+		//初始api
+		api = new Api();
 		//初始化gson实例 
 		GsonBuilder builder = new GsonBuilder(); 
 		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {

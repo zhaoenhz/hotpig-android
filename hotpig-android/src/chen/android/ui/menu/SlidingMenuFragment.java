@@ -76,28 +76,11 @@ public class SlidingMenuFragment extends SherlockListFragment implements EventLi
 			Account acc = MyContext.getInstance().getAccount();
 			avatar.setImageDrawable(new AvatarDrawable(avatar, acc.id));
 			nickname.setText(acc.nickname);
-			
-			getView().findViewById(R.id.dream_info).setVisibility(LinearLayout.VISIBLE);
-			TextView totalDream = (TextView)getView().findViewById(R.id.total_dream);
-			TextView totalAsk = (TextView)getView().findViewById(R.id.total_ask);
-			TextView totalFollowing = (TextView)getView().findViewById(R.id.total_following);
-			totalDream.setText(countHtml("分享", 0));
-			totalAsk.setText(countHtml("问梦", 0));
-			totalFollowing.setText(countHtml("好友", 0));
-			
-			totalDream.setOnClickListener(listener);
-			totalAsk.setOnClickListener(listener);
-			totalFollowing.setOnClickListener(listener);
 		} else {
 			nickname.setText("账号登录");
 			avatar.setImageResource(R.drawable.ic_search);
 		}
 	}
-	
-	private Spanned countHtml(String type, int count){
-		return Html.fromHtml("<font color=\"white\">"+ count +"</font><br/><font color=\"#999999\">"+ type + "</font>");
-	}
-	
 
 	@Override
 	public void onDestroy() {

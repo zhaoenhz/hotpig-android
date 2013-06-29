@@ -14,6 +14,7 @@ import chen.android.ui.menu.SlidingMenuFragment;
 import chen.android.ui.task.TaskListFrag;
 import chen.android.ui.commons.*;
 
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnCloseListener;
@@ -21,12 +22,13 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 
-public class MainActivity extends SlidingFragmentActivity implements ActivityResultSetter{
+public class MainActivity extends SlidingFragmentActivity implements ActivityResultSetter, MenuProvider{
 
 	public static final String FragmentUseBackStackKey = "back-stack";
 	public static final String FragmentKey = "fragment";
 	
 	private Intent intent;
+	private Menu menu;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
@@ -46,6 +48,11 @@ public class MainActivity extends SlidingFragmentActivity implements ActivityRes
 		}
 	}
 	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	this.menu = menu;
+    	return true;
+    }
 
 	@Override
 	protected void onNewIntent(Intent intent) {
@@ -181,6 +188,13 @@ public class MainActivity extends SlidingFragmentActivity implements ActivityRes
 				getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			}
 		});
+	}
+
+
+	@Override
+	public Menu getMenu() {
+		// TODO Auto-generated method stub
+		return menu;
 	}
 	
 	

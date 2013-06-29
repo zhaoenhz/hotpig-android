@@ -37,9 +37,14 @@ public class FailureResponseException extends HotpigException {
 		// TODO Auto-generated method stub
 		String message = "发送请求出错";
 		if(res != null){
-			message = res.getErrorMessage();
+			if(res.getErrorMessage() != null) {
+				message = res.getErrorMessage();
+			} else if(res.getErrors() != null && res.getErrors().size() >0){
+				message = res.getErrors().get(0).getMessage();
+			}
 		}
 		switch(statusCode){
+		case 403 : message = "无权访问资源"; break;
 		case 404 : message = "找不到请求资源"; break;
 		case 500 : message = "服务器端程序出错"; break;
 		}
