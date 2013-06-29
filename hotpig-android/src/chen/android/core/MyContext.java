@@ -71,21 +71,37 @@ public class MyContext {
 	}
 	
 	
-	public File getCacheDir(){
-		File cacheDir = null;
+	public File getCrashLogDir(){
+		File dir = new File(getBaseDir(), "crash");
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
+		return dir;
+	}
+	
+	private File getBaseDir(){
+		File dir = null;
 		if(Device.isSdcardWriteable()){
 			File sdcardDir =Environment.getExternalStorageDirectory();
-			String path = sdcardDir.getPath() + File.separator +  "wedream" + File.separator +"mycache";
-			cacheDir = new File(path);
-			if(!cacheDir.exists()){
-				cacheDir.mkdirs();
-			}
+			String path = sdcardDir.getPath() + File.separator +  "17daka";
+			dir = new File(path);
 		} else {
 			File cache = getApp().getCacheDir();
 			File appDir = new File(cache.getParent());
-			cacheDir = new File(appDir.getPath() +  File.separator + "mycache");
+			dir = new File(appDir.getPath() +  File.separator + "17daka");
 		}
-		return cacheDir;
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
+		return dir;
+	}
+	
+	public File getCacheDir(){
+		File dir = new File(getBaseDir(),"mycache");
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
+		return dir;
 	}
 	
 	public Account getAccount(){
