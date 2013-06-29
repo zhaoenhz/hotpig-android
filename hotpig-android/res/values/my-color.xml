@@ -1,0 +1,17 @@
+<resources>
+    <color name="my_color_cccccc">#cccccc</color>
+    <color name="my_color_999999">#999999</color>
+    <color name="my_color_111111">#111111</color>
+    <color name="my_color_ffffff">#ffffff</color>
+    <color name="my_color_333333">#333333</color>
+    <color name="my_color_666666">#666666</color>
+    <color name="my_color_eeeeee">#eeeeee</color>
+    <color name="my_color_21c6b0">#21c6b0</color>
+    <color name="my_color_f9f9f9">#f9f9f9</color>
+    <color name="my_color_66000000">#66000000</color>
+    <color name="my_color_99000000">#99000000</color>
+    <color name="sliding_menu_header_bg">#1a1a1a</color>
+    <color name="sliding_menu_list_bg_select">#26000000</color>
+    <color name="sliding_menu_bg">#ff363636</color>
+    <color name="list_view_sel">#ff9fd9f4</color>
+</resources>

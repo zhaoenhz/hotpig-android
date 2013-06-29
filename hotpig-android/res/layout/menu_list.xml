@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    						android:layout_width="match_parent"
+    						android:layout_height="match_parent"
+    						android:orientation="vertical"
+    						android:background="@color/sliding_menu_bg">
+	<LinearLayout android:id="@+id/header"
+	    		  android:layout_width="match_parent"
+	    		  android:layout_height="48dp"
+	    		  android:background="@drawable/sliding_menu_header"
+	    		  android:clickable="true"
+	    		  android:orientation="horizontal">
+	    <ImageView
+	        android:id="@+id/avatar"
+	        android:layout_width="48dp"
+	        android:layout_height="48dp"
+	        android:layout_gravity="center_vertical"
+	        android:clickable="false"/>
+	    <TextView
+	        android:id="@+id/nickname"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="center_vertical"
+	        android:paddingLeft="10dp"
+	        android:textAppearance="@android:style/TextAppearance.Medium" 
+	        android:textColor="@color/my_color_cccccc"
+	        android:clickable="false"/>
+	    
+	    <ImageView
+	        android:layout_width="16dp"
+	        android:layout_height="16dp"
+	        android:layout_gravity="center_vertical"
+	        android:src="@drawable/ic_arrow_right"
+	        android:clickable="false"/>
+	</LinearLayout>
+	
+	<LinearLayout android:id="@+id/dream_info"
+	    		  android:layout_width="fill_parent"
+	    		  android:layout_height="wrap_content"
+				  android:orientation="horizontal" 
+				  android:background="@color/sliding_menu_list_bg_select"
+				  android:visibility="gone">
+       	    <TextView
+       	        android:id="@+id/total_dream"
+        		android:layout_width="0dp"  
+       	        android:layout_height="wrap_content"
+       	        android:layout_weight="1"
+       	        android:gravity="center_horizontal"
+       	        android:layout_gravity ="center"
+       	        android:clickable="true"
+       	        android:textAppearance="@android:style/TextAppearance.Small"
+       	        android:paddingTop="12dp"
+       	        android:paddingBottom="12dp"
+       	        android:background="@drawable/sliding_menu_count"/>
+            <View 
+                android:layout_width="0.2dp"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:background="@android:color/black"/>
+       	    <TextView
+       	        android:id="@+id/total_ask"
+       	        android:layout_width="0dp"  
+       	        android:layout_height="wrap_content"
+       	        android:layout_weight="1"
+       	        android:gravity="center_horizontal"
+       	        android:layout_gravity ="center"
+       	        android:clickable="true"
+       	        android:textAppearance="@android:style/TextAppearance.Small"
+       	        android:paddingTop="12dp"
+       	        android:paddingBottom="12dp"
+       	        android:background="@drawable/sliding_menu_count"/>
+       	    
+            <View 
+                android:layout_width="0.2dp"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:background="@android:color/black"/>
+       	    <TextView
+       	        android:id="@+id/total_following"
+       	        android:layout_width="0dp"  
+       	        android:layout_height="wrap_content"
+       	        android:layout_weight="1"
+       	        android:gravity="center_horizontal"
+       	        android:layout_gravity ="center"
+       	        android:clickable="true"
+       	        android:textAppearance="@android:style/TextAppearance.Small"
+       	        android:paddingTop="12dp"
+       	        android:paddingBottom="12dp"
+       	        android:background="@drawable/sliding_menu_count"/>
+	</LinearLayout>
+
+            
+    <ListView android:id="@android:id/list"
+		      android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:divider="@drawable/divider_line_night"
+              android:cacheColorHint="#00000000"
+              android:background="@color/sliding_menu_bg"/>
+    
+    
+</LinearLayout>
