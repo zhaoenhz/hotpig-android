@@ -6,7 +6,6 @@ import chen.android.exception.NetworkException;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
@@ -35,7 +34,7 @@ public class AvatarDrawable extends BitmapDrawable{
 		return avatarId == (Integer)container.getTag();
 	}
     
-    private class LoadAvatarTask extends AsyncTask<Void, Void, Drawable>{
+    private class LoadAvatarTask extends AsyncTask<Void, Void, Bitmap>{
 		
 		@Override
 		protected void onPreExecute() {
@@ -47,29 +46,32 @@ public class AvatarDrawable extends BitmapDrawable{
 		}
     	
 		@Override
-		protected Drawable doInBackground(Void... params) {
+		protected Bitmap doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			if(!match()){
 				super.cancel(true);
 			}
 			try {
-				Bitmap bitmap = F.api().loadAvatar(avatarId);
-				return new BitmapDrawable(container.getResources(), bitmap);
+				return F.api().loadAvatar(avatarId);
 			} catch (NetworkException e) {
 				// TODO Auto-generated catch block
 			} catch (FailureResponseException e) {
 				// TODO Auto-generated catch block
-				UiUtils.toast(e);
+				if(e.getStatusCode() == 404){
+					return StaticResourceProvider.defaultAvatar();
+				} else {
+					UiUtils.toast(e);
+				}
 			} 
 			return null;
 		}
 		
 		@Override
-		protected void onPostExecute(Drawable result) {
+		protected void onPostExecute(Bitmap result) {
 			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			if(result != null && match()){
-				container.setImageDrawable(result);
+				container.setImageDrawable(new BitmapDrawable(container.getResources(), result));
 			}
 		}
 
