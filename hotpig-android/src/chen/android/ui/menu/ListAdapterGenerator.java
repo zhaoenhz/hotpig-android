@@ -17,12 +17,14 @@ class ListAdapterGenerator {
 	
 	public static final int IdTaskList = 1;
 	public static final int IdSetting = 2;
+	public static final int IdExit = 3;
 	
 	private SampleItem notificationItem = new SampleItem(0, "提醒", R.drawable.ic_search);
 	private SampleItem trendsItem = new SampleItem(0, "好友动态", R.drawable.ic_search);
 	private SampleItem exploreItem = new SampleItem(0, "浏览发现", R.drawable.ic_search);
 	private SampleItem myTaskListItem = new SampleItem(IdTaskList, "我的任务", R.drawable.ic_search);
 	private SampleItem settingItem = new SampleItem(IdSetting, "设置", R.drawable.ic_search);
+	private SampleItem exitItem = new SampleItem(IdExit, "退出", R.drawable.ic_search);
 	
 	ListAdapterGenerator(Context context, MenuOnClickListener listener){
 		this.context = context;
@@ -45,6 +47,7 @@ class ListAdapterGenerator {
 			adapter.add(exploreItem);
 		}
 		adapter.add(settingItem);
+		adapter.add(exitItem);
 		return adapter;
 	}
 	

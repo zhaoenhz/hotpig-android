@@ -8,14 +8,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 
 import chen.android.R;
+import chen.android.core.Authorization;
 import chen.android.core.Initiation;
 import chen.android.core.MyContext;
 import chen.android.ui.menu.SlidingMenuFragment;
 import chen.android.ui.task.TaskListFrag;
+import chen.android.ui.account.SignInFrag;
 import chen.android.ui.commons.*;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnCloseListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
@@ -26,22 +29,30 @@ public class MainActivity extends SlidingFragmentActivity implements ActivityRes
 
 	public static final String FragmentUseBackStackKey = "back-stack";
 	public static final String FragmentKey = "fragment";
+	public static final String KeyExit = "exit";
 	
-	private Intent intent;
 	private Menu menu;
 	
 	@Override
 	public void onCreate(Bundle bundle) {
 		// TODO Auto-generated method stub
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		Initiation.init(this);
 		super.setTheme(R.style.Theme_Sherlock_Light_DarkActionBar);
 		super.onCreate(bundle);
 		setContentView(R.layout.main_activity);
 		initSlidingMenu(bundle);
-		this.intent = super.getIntent();
-		intent.putExtra(FragmentKey, TaskListFrag.class.getName());
+		Intent intent = super.getIntent();
+		//应用启动默认fragment
+		if(intent.getExtras() == null){
+			if(Authorization.hasAuth()){
+				intent.putExtra(FragmentKey, TaskListFrag.class.getName());		
+			} else {
+				intent.putExtra(FragmentKey, SignInFrag.class.getName());	
+			}
+		}
 		try {
-			handleIntent();
+			handleIntent(intent);
 		}  catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e);
@@ -57,9 +68,9 @@ public class MainActivity extends SlidingFragmentActivity implements ActivityRes
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		this.intent = intent;
+		setIntent(intent);
 		try {
-			handleIntent();
+			handleIntent(intent);
 		}  catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e);
@@ -78,6 +89,18 @@ public class MainActivity extends SlidingFragmentActivity implements ActivityRes
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
+		FragmentManager fm = getSupportFragmentManager();
+		Fragment currFrag = fm.findFragmentById(R.id.my_fragment);
+		if(currFrag != null && currFrag instanceof BackPressedHandler){
+			if(((BackPressedHandler)currFrag).handleBackPress()){
+				return;
+			}
+		}
+		if(fm.getBackStackEntryCount() > 1){
+			super.onBackPressed();
+			return;
+		} 
+		
 		if(this.getSlidingMenu().isMenuShowing()){
 			finish();
 		} else {
@@ -124,8 +147,17 @@ public class MainActivity extends SlidingFragmentActivity implements ActivityRes
 	}
 
 
-	private void handleIntent() throws InstantiationException, IllegalAccessException, ClassNotFoundException{
-		String fragName = intent.getExtras().getString(FragmentKey);
+	private void handleIntent(Intent intent) throws InstantiationException, IllegalAccessException, ClassNotFoundException{
+		Bundle bundle = intent.getExtras();
+		if(bundle == null) return;
+		
+		//退出
+		if(bundle.getBoolean(KeyExit,false)){
+			finish();
+			return;
+		}
+		
+		String fragName = bundle.getString(FragmentKey);
 		FragmentManager fm = getSupportFragmentManager();
 		
 		if(intent.getExtras().getBoolean(FragmentUseBackStackKey) && fm.getBackStackEntryCount() > 0){

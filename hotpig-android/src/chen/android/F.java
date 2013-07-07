@@ -18,12 +18,14 @@ import com.google.gson.JsonSerializer;
 //factory
 public class F {
 
+	private static Api cacheApi;
 	private static Api api;
 	private static Gson gson;
 	
 	static{
 		//初始api
-		api = new Api();
+		api = new Api(false);
+		cacheApi = new Api(true);
 		//初始化gson实例 
 		GsonBuilder builder = new GsonBuilder(); 
 		builder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>() {
@@ -50,7 +52,11 @@ public class F {
 	}
 	
 	public static Api api(){
-		return api;
+		return api(true);
+	}
+	
+	public static Api api(boolean cache){
+		return cache ? cacheApi : api;
 	}
 	
 }

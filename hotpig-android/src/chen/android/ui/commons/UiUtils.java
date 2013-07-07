@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -183,6 +184,10 @@ public final class UiUtils {
 	public static int px2dp(int px){
 		DisplayMetrics displayMetrics = MyContext.getInstance().getApp().getResources().getDisplayMetrics();
 		return (int) ((px/displayMetrics.density)+0.5);
+	}
+	
+	public static float getRawSize(int unit, float size) {
+	    return TypedValue.applyDimension(unit, size, MyContext.getInstance().getApp().getResources().getDisplayMetrics());
 	}
 	
 	public static Bitmap decodeSampledBitmapFromResource(Uri uri, int reqWidth, int reqHeight) {

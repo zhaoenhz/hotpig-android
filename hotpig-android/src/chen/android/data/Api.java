@@ -2,12 +2,14 @@ package chen.android.data;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.http.Header;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import chen.android.core.MyContext;
+import chen.android.data.cache.FileCacheFactory;
 import chen.android.exception.FailureResponseException;
 import chen.android.exception.NetworkException;
 import chen.android.utils.Action;
@@ -18,6 +20,11 @@ import chen.android.utils.JSONResponse;
 public class Api {
 
 	private static final String BaseUrl = MyContext.BaseUrl + "/api/";
+	
+	private boolean cache;
+	public Api(boolean cache){
+		this.cache = cache;
+	}
 	
 	public String signIn(String email, String password) throws FailureResponseException, NetworkException{
 		CookieHandler handler = new CookieHandler();
@@ -37,6 +44,10 @@ public class Api {
 	public Bitmap loadAvatar(int id) throws FailureResponseException,
 			NetworkException {
 		// TODO Auto-generated method stub
+		if(cache){
+			Bitmap bm = FileCacheFactory.getAvatar(id);
+			if(bm!=null) return bm;
+		}
 		InputStream is = new HttpRequest(Action.get(MyContext.BaseUrl + "/static/photo/1836-small.jpg")).execute().getStream();
 		Bitmap bm = BitmapFactory.decodeStream(is);
 		try {
@@ -45,7 +56,18 @@ public class Api {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e);
 		}
+		if(cache){
+			FileCacheFactory.putAvatar(id, bm);
+		}
 		return bm;
+	}
+	
+	public void checkIn(int taskId, String content, int star, boolean failed) throws FailureResponseException, NetworkException{
+		post("check-in").addParam("id", taskId).addParam("content", content).addParam("star", star).addParam("failed", failed).execute().getJson(Object.class).checkSuccess();
+	}
+	
+	public List<TaskThread> listTask(int id) throws FailureResponseException, NetworkException{
+		return get("list-task").addParam("id", id).execute().getJsonArray(TaskThread.class).getReturnObject();
 	}
 
 	private HttpRequest get(String uri){

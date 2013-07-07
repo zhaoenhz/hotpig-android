@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:padding="8dp" >
+	    
+	    <ImageView android:id="@+id/row_checkinBtn"
+	        android:layout_width="48dp"
+	        android:layout_height="48dp"
+	        android:layout_marginRight="8dp"
+	        android:src="@drawable/ic_checkin"/>
+	        
+		<TextView  android:id="@+id/row_title"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_toRightOf="@+id/row_checkinBtn"
+		    android:layout_alignParentTop="true"
+		    android:textSize="18sp"
+		    android:textColor="@color/my_color_333333"
+		    android:textIsSelectable="false"/>
+	        
+		<TextView android:id="@+id/row_date"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@+id/row_title"
+		    android:layout_toRightOf="@+id/row_checkinBtn"
+		    android:textSize="16sp"
+		    android:textColor="@color/my_color_333333"
+		    android:layout_marginTop="5dp"
+		    android:textIsSelectable="false">
+		    
+		</TextView>
+	        
+	</RelativeLayout>
+	
+	
+	<chen.android.ui.commons.ChartView 
+	    android:id="@+id/chart"
+	    android:layout_width="match_parent"
+	    android:layout_height="20dp"/>
+	
+</LinearLayout>

@@ -33,12 +33,17 @@ public class MenuOnClickListener implements OnClickListener{
 			break;
 		}
 		
+		case ListAdapterGenerator.IdExit :{
+			intent = IntentGenerator.exitActivity();
+			break;
+		}
+		
 		}
 		
 		
 		if(intent != null){
 			Context context = v.getContext();
-			if(context instanceof SlidingFragmentActivity){
+			if(context instanceof SlidingFragmentActivity && v.getId() != ListAdapterGenerator.IdExit){
 				SlidingFragmentActivity sliding = (SlidingFragmentActivity) context;
 				sliding.toggle();
 			}
