@@ -19,7 +19,7 @@ import chen.android.utils.JSONResponse;
 
 public class Api {
 
-	private static final String BaseUrl = MyContext.BaseUrl + "/api/";
+	private static final String BaseUrl = MyContext.getInstance().getBaseUrl() + "/api/";
 	
 	private boolean cache;
 	public Api(boolean cache){
@@ -48,7 +48,7 @@ public class Api {
 			Bitmap bm = FileCacheFactory.getAvatar(id);
 			if(bm!=null) return bm;
 		}
-		InputStream is = new HttpRequest(Action.get(MyContext.BaseUrl + "/static/photo/"+id+"-small.jpg")).execute().getStream();
+		InputStream is = new HttpRequest(Action.get(MyContext.getInstance().getBaseUrl() + "/static/photo/"+id+"-small.jpg")).execute().getStream();
 		Bitmap bm = BitmapFactory.decodeStream(is);
 		try {
 			is.close();

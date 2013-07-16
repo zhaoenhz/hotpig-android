@@ -2,10 +2,10 @@ package chen.android.core;
 
 import java.io.File;
 
+import chen.android.BuildConfig;
 import chen.android.data.Account;
 import chen.android.ui.MainActivity;
 import chen.android.utils.Device;
-
 import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -20,7 +20,7 @@ public class MyContext {
 	private MyContext(){}
 	private Application app;
 	
-	public static final String BaseUrl = "http://www.17daka.com";
+	private static final String BaseUrl = "http://www.17daka.com";
 
 	private static MyContext context = new MyContext();
 	public static MyContext getInstance(){
@@ -33,6 +33,14 @@ public class MyContext {
 
 	void setApp(Application app) {
 		this.app = app;
+	}
+	
+	public String getBaseUrl(){
+		if(BuildConfig.DEBUG){
+			return "http://192.168.1.2:8080/hotpig";
+		} else {
+			return BaseUrl;
+		}
 	}
 	
 	public float getAppVersion(){

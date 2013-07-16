@@ -33,7 +33,7 @@ public class Authorization {
         String cookies = Authorization.getAuthCookie();
         if(cookies != null){
         	CookieManager cookieManager = CookieManager.getInstance(); 
-        	cookieManager.setCookie(MyContext.BaseUrl+"/", cookies);  
+        	cookieManager.setCookie(MyContext.getInstance().getBaseUrl()+"/", cookies);  
         	CookieSyncManager.getInstance().sync(); 
         }
 	}
