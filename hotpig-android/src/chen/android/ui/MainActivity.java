@@ -121,7 +121,7 @@ public class MainActivity extends SlidingFragmentActivity implements ActivityRes
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == android.R.id.home){
-			toggle();
+			onBackPressed();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
