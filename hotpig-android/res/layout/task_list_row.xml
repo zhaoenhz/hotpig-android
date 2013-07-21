@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/row_task"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -42,5 +43,29 @@
 	    android:id="@+id/chart"
 	    android:layout_width="match_parent"
 	    android:layout_height="20dp"/>
+	
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="horizontal">
+		<Button 
+		    android:id="@+id/failed"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:background="@drawable/a_button_light"
+		    android:padding="5dp"
+		    android:layout_margin="5dp"
+		    android:text="我没做到"/>
+		<Button 
+		    android:id="@+id/done"
+		    android:layout_width="0dp"
+		    android:layout_height="wrap_content"
+		    android:layout_weight="1"
+		    android:background="@drawable/a_button_light"
+		    android:padding="5dp"
+		    android:layout_margin="5dp"
+		    android:text="我做到了"/> 
+	</LinearLayout>
 	
 </LinearLayout>

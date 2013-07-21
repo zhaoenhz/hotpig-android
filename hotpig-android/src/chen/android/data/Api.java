@@ -62,12 +62,16 @@ public class Api {
 		return bm;
 	}
 	
-	public void checkIn(int taskId, String content, int star, boolean failed) throws FailureResponseException, NetworkException{
-		post("check-in").addParam("id", taskId).addParam("content", content).addParam("star", star).addParam("failed", failed).execute().getJson(Object.class).checkSuccess();
+	public int checkIn(int taskId, String content, Star star, boolean failed) throws FailureResponseException, NetworkException{
+		return post("check-in").addParam("id", taskId).addParam("content", content).addParam("star", star==null?0:star.ordinal()+1).addParam("failed", failed).execute().getJson(Integer.class).getReturnObject();
 	}
 	
-	public List<TaskThread> listTask(int id) throws FailureResponseException, NetworkException{
-		return get("list-task").addParam("id", id).execute().getJsonArray(TaskThread.class).getReturnObject();
+	public List<TaskThread> listTask(int accId) throws FailureResponseException, NetworkException{
+		return get("list-task").addParam("id", accId).execute().getJsonArray(TaskThread.class).getReturnObject();
+	}
+	
+	public List<Checkin> listCheckin(int taskId) throws FailureResponseException, NetworkException{
+		return get("list-checkin").addParam("id", taskId).execute().getJsonArray(Checkin.class).getReturnObject();
 	}
 
 	private HttpRequest get(String uri){

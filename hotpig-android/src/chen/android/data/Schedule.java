@@ -1,7 +1,9 @@
 package chen.android.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 
 /**
@@ -13,5 +15,11 @@ public class Schedule {
 	
 	public List<ScheduleNode> nodes = new ArrayList<ScheduleNode>();
 	
-
+	public Date getStartTime(){
+		return nodes.get(0).timeSegment.getBeginTime();
+	}
+	
+	public Date getEndTime(){
+		return nodes.get(nodes.size()-1).timeSegment.getEndTime();
+	}
 }
